@@ -1,6 +1,7 @@
 # Board
-This library can create a board game with many specifics parameter
+This library create a board with JAVAFX windows display.
+You can specify the design of any cell and every action like move an element from cell to another etc...
 
-WIP
+Work in progress
 
-I will add some documentation later
+
