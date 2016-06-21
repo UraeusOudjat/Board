@@ -11,4 +11,5 @@ public class Cell extends DesignCell{
 		super(type);
 		this.type = type;
 	}
+
 }

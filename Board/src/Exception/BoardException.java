@@ -10,32 +10,40 @@ public class BoardException extends Exception{
 	public BoardException(TypeException typeException) {
 		switch (typeException) {
 		case TYPE_BORD_SIZE:
-				System.err.println("The Type Board has not the same size as the Cell Board !");
+				System.err.println("The Type Board has not the same size as the Cell Board.");
 			break;
 
 		case BOARD_INCORECT_VALUES:
-				System.err.println("Row or Column can't be null or negative !");
+				System.err.println("Row or Column can't be null or negative.");
 			break;
 		case TYPE_BOARD_GRID:
-			System.err.println("The type board must have always the same row and column size !");
+			System.err.println("The type board must have always the same row and column size.");
 			break;
 		case DESIGN_WAS_NOT_SPECIFIED :
-			System.err.println("You must specify ColorMap or ImageMap");
+			System.err.println("You must specify ColorMap or ImageMap.");
 			break;
 		
 		case COLOR_MAP_TYPE :
-			System.err.println("The color map contain unknow type, check the ArrayList Type");
+			System.err.println("The color map contain unknow type, check the ArrayList Type.");
 			break;
 		
 		case IMAGE_MAP_TYPE :
-			System.err.println("The image map contain unknow type, check the ArrayList Type");
+			System.err.println("The image map contain unknow type, check the ArrayList Type.");
 			break;
 		
 		case TYPE_BOARD_TYPE:
-			System.err.println("The type board contain unkonw type, check the ArrayList Type");
+			System.err.println("The type board contain unkonw type, check the ArrayList Type.");
+			break;
+			
+		case STROKE_COLOR :
+			System.err.println("Stroke color are null.");
+			break;
+			
+		case STROKE_WIDTH :
+			System.err.println("Stroke width are null or negative.");
 			break;
 		default:
-			System.err.println("Board unknow error");
+			System.err.println("Board unknow error.");
 			break;
 		}
 	}
