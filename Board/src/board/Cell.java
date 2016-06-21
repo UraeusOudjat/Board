@@ -8,7 +8,7 @@ public class Cell extends DesignCell{
 	private String type;
 	
 	public Cell(String type){
-		super();
+		super(type);
 		this.type = type;
 	}
 }

@@ -1,5 +1,5 @@
 package global;
 
-public enum TyeCell {
+public enum TypeCell {
 
 }

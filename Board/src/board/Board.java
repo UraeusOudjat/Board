@@ -1,5 +1,6 @@
 package board;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import Exception.BoardException;
@@ -14,7 +15,7 @@ import javafx.scene.paint.Color;
 public class Board {
 	private int row;
 	private int column;
-	private String[] cellType;
+	private ArrayList<String> cellType;
 	private Cell[][] board;
 	private BorderPane globalPane;
 	private GridPane boardPane;
@@ -25,14 +26,20 @@ public class Board {
 	private Area areaRight;
 	
 	
-	public Board(int row, int column, int cellWidth, int cellHeight,String[] cellType, Area areaTop,Area areaBot, Area areaLeft, Area areaRight, String[][] typeBoard, HashMap<String, Color> colorMap, HashMap<String, Image> imageMap) throws BoardException {
+	public Board(int row, int column, int cellWidth, int cellHeight,ArrayList<String> cellType, Area areaTop,Area areaBot, Area areaLeft, Area areaRight, String[][] typeBoard, HashMap<String, Color> colorMap, HashMap<String, Image> imageMap) throws BoardException {
 		
 		if(row <= 0 || column <= 0){
-			throw new BoardException(TypeException.INCORECT_VALUE);
+			throw new BoardException(TypeException.BOARD_INCORECT_VALUES);
 		}else if(!typeBoardIsGrid(typeBoard)){
 			throw new BoardException(TypeException.TYPE_BOARD_GRID);
 		}else if(typeBoard.length != row || typeBoard[0].length != column){
-			throw new BoardException(TypeException.UNMATCH_VALUE);
+			throw new BoardException(TypeException.TYPE_BORD_SIZE);
+		}else if(colorMap == null && imageMap == null){
+			throw new BoardException(TypeException.DESIGN_WAS_NOT_SPECIFIED);
+		}else if(!mapTypeMatch(colorMap, cellType)){
+			throw new BoardException(TypeException.COLOR_MAP_TYPE);
+		}else if(!mapTypeMatch(imageMap, cellType)){
+			throw new BoardException(TypeException.COLOR_MAP_TYPE);
 		}
 		
 		this.globalPane = new BorderPane();
@@ -40,6 +47,9 @@ public class Board {
 		this.boardPane = new GridPane();
 		GlobalValues.CELL_HEIGHT = cellHeight;
 		GlobalValues.CELL_WIDTH = cellWidth;
+		
+		GlobalValues.DESIGN_COLOR = colorMap;
+		GlobalValues.DESIGN_IMAGE = imageMap;
 		
 		boardPane.setPrefSize(GlobalValues.CELL_WIDTH*column, GlobalValues.CELL_HEIGHT*row);
 		boardPane.setGridLinesVisible(true);
@@ -66,7 +76,7 @@ public class Board {
 				}
 				
 				board[i][j]= new Cell(typeBoard[i][j]);
-				boardPane.add(board[i][j].getRectangle(), j, i);
+				boardPane.add(board[i][j].getDesign(), j, i);
 			}
 		}
 		double areaWidth = 0;
@@ -115,5 +125,15 @@ public class Board {
 		return true;
 	}
 
+	private boolean mapTypeMatch(HashMap<String, ?> map, ArrayList<String> cellType){
+		if(map != null){
+			for(String type : map.keySet()){
+				if(!cellType.contains(type)){
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 	
 }
