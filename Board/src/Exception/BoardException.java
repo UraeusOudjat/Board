@@ -24,13 +24,18 @@ public class BoardException extends Exception{
 			break;
 		
 		case COLOR_MAP_TYPE :
-			System.err.println("The color map contain unknow type");
+			System.err.println("The color map contain unknow type, check the ArrayList Type");
 			break;
 		
 		case IMAGE_MAP_TYPE :
-			System.err.println("The image map contain unknow type");
+			System.err.println("The image map contain unknow type, check the ArrayList Type");
+			break;
+		
+		case TYPE_BOARD_TYPE:
+			System.err.println("The type board contain unkonw type, check the ArrayList Type");
 			break;
 		default:
+			System.err.println("Board unknow error");
 			break;
 		}
 	}

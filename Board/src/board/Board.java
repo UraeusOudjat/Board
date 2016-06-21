@@ -40,6 +40,8 @@ public class Board {
 			throw new BoardException(TypeException.COLOR_MAP_TYPE);
 		}else if(!mapTypeMatch(imageMap, cellType)){
 			throw new BoardException(TypeException.COLOR_MAP_TYPE);
+		}else if(! typeBoardMatch(typeBoard, cellType)){
+			throw new BoardException(TypeException.TYPE_BOARD_TYPE);
 		}
 		
 		this.globalPane = new BorderPane();
@@ -109,6 +111,14 @@ public class Board {
 		return globalPane;
 	}
 
+	public double getWidth(){
+		return globalPane.getPrefWidth();
+	}
+	
+	public double getHeight(){
+		return globalPane.getPrefHeight();
+	}
+	
 	//TODO : a supprimer , utile pour le test
 	public GridPane getBoardPane() {
 		return boardPane;
@@ -135,5 +145,17 @@ public class Board {
 		}
 		return true;
 	}
+	
+	private boolean typeBoardMatch( String[][] typeBoard, ArrayList<String>cellType){
+		for(int i=0; i<typeBoard.length;i++){
+			for(int j=0;j< typeBoard[0].length;j++){
+				if(!cellType.contains(typeBoard[i][j])){
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
 	
 }
