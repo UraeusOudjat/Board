@@ -13,35 +13,56 @@ import javafx.scene.shape.Rectangle;
 public class DesignCell {
 
 	private Rectangle cell = null;
-	private StackPane imgPane = null;
-	private ImageView imageView = null;
+	private StackPane cellPane = null;
+	private ImageView backgroundImgView = null;
+	private ImageView agentImgView = null;
 
-	public DesignCell(String type) {
+	public DesignCell(String backgroundType, String agentType) {
+		cellPane = new StackPane();
+		cellPane.setMinSize(GlobalValues.CELL_WIDTH, GlobalValues.CELL_HEIGHT);
+		cellPane.setAlignment(Pos.CENTER);
 		if (GlobalValues.DESIGN_IMAGE != null) {
-			if (GlobalValues.DESIGN_IMAGE.get(type) != null) {
-				imgPane = new StackPane();
-				imgPane.setPrefSize(GlobalValues.CELL_WIDTH, GlobalValues.CELL_HEIGHT);
-				imageView = new ImageView();
-				imageView.setImage(GlobalValues.DESIGN_IMAGE.get(type));
-				imageView.setPreserveRatio(false);
-				imageView.setFitWidth(GlobalValues.CELL_WIDTH);
-				imageView.setFitHeight(GlobalValues.CELL_HEIGHT);
-				imgPane.getChildren().add(imageView);
+			if (GlobalValues.DESIGN_IMAGE.get(backgroundType) != null) {
+				backgroundImgView = new ImageView();
+				backgroundImgView.setImage(GlobalValues.DESIGN_IMAGE.get(backgroundType));
+				backgroundImgView.setPreserveRatio(false);
+				backgroundImgView.setFitWidth(GlobalValues.CELL_WIDTH);
+				backgroundImgView.setFitHeight(GlobalValues.CELL_HEIGHT);
+				cellPane.getChildren().add(backgroundImgView);
 			} else {
 				cell = new Rectangle(GlobalValues.CELL_WIDTH,
 						GlobalValues.CELL_HEIGHT);
-				cell.setFill(GlobalValues.DESIGN_COLOR.get(type));
+				cell.setFill(GlobalValues.DESIGN_COLOR.get(backgroundType));
+				cellPane.getChildren().add(cell);
 			}
 
 		} else {
 			cell = new Rectangle(GlobalValues.CELL_WIDTH,
 					GlobalValues.CELL_HEIGHT);
-			cell.setFill(GlobalValues.DESIGN_COLOR.get(type));
+			cell.setFill(GlobalValues.DESIGN_COLOR.get(backgroundType));
+			cellPane.getChildren().add(cell);
 		}
+		
+		
+		// After initialize the background design we add the agent design
+		if (GlobalValues.DESIGN_IMAGE != null && agentType != null) {
+			if(GlobalValues.DESIGN_IMAGE.containsKey(agentType)){
+				agentImgView = new ImageView();
+				agentImgView.setImage(GlobalValues.DESIGN_IMAGE.get(backgroundType));
+				agentImgView.setPreserveRatio(false);
+				agentImgView.setFitWidth(GlobalValues.CELL_WIDTH);
+				agentImgView.setFitHeight(GlobalValues.CELL_HEIGHT);
+				System.out.println("design agent img "+agentImgView.getImage());
+				
+				System.out.println("size pane :"+cellPane.getChildren().size());
+				cellPane.getChildren().add(agentImgView);
+				System.out.println("size pane :"+cellPane.getChildren().size());
+			}
+		}	
 	}
 
 	public void setStroke() {
-		if (imageView != null) {
+		if (backgroundImgView != null) {
 			if (GlobalValues.CELL_STROKE) {
 				String hexColor = String
 						.format("#%02X%02X%02X",
@@ -49,26 +70,22 @@ public class DesignCell {
 								(int) (GlobalValues.CELL_STROKE_COLOR
 										.getGreen() * 255),
 								(int) (GlobalValues.CELL_STROKE_COLOR.getBlue() * 255));
-				imgPane.setPrefSize(GlobalValues.CELL_WIDTH+GlobalValues.CELL_STROKE_WIDTH, GlobalValues.CELL_HEIGHT+GlobalValues.CELL_STROKE_WIDTH);
-				imgPane.setStyle("-fx-background-color: " + hexColor + ";");
-				imageView.setFitWidth(GlobalValues.CELL_WIDTH);
-				imageView.setFitHeight(GlobalValues.CELL_HEIGHT);
-				System.out.println("img w:"+imgPane.getPrefWidth()+" img h :"+imgPane.getHeight());
+				cellPane.setMinSize(GlobalValues.CELL_WIDTH+GlobalValues.CELL_STROKE_WIDTH, GlobalValues.CELL_HEIGHT+GlobalValues.CELL_STROKE_WIDTH);
+				cellPane.setStyle("-fx-background-color: " + hexColor + ";");
+				backgroundImgView.setFitWidth(GlobalValues.CELL_WIDTH-GlobalValues.CELL_STROKE_WIDTH);
+				backgroundImgView.setFitHeight(GlobalValues.CELL_HEIGHT-GlobalValues.CELL_STROKE_WIDTH);
 			}
 
 		} else {
 			if (GlobalValues.CELL_STROKE) {
 				cell.setStroke(GlobalValues.CELL_STROKE_COLOR);
 				cell.setStrokeWidth(GlobalValues.CELL_STROKE_WIDTH);
+			
 			}
 		}
 	}
 
 	public Node getDesign() {
-		if (imgPane != null) {
-			return imgPane;
-		} else {
-			return cell;
-		}
+			return cellPane;
 	}
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import Exception.BoardException;
+import Exception.ExceptionCheck;
 import Exception.TypeException;
 import design.Area;
 import global.GlobalValues;
@@ -20,65 +21,114 @@ public class Board {
 	private BorderPane globalPane;
 	private GridPane boardPane;
 
+	private String[][] backgroundBoard;
+	private String[][] agentBoard;
+	
 	private Area areaTop;
 	private Area areaBot;
 	private Area areaLeft;
 	private Area areaRight;
 
-	public Board(int row, int column, int cellWidth, int cellHeight,
-			ArrayList<String> cellType, Area areaTop, Area areaBot,
-			Area areaLeft, Area areaRight, String[][] typeBoard,
-			HashMap<String, Color> colorMap, HashMap<String, Image> imageMap)
-			throws BoardException {
-
-		if (row <= 0 || column <= 0) {
-			throw new BoardException(TypeException.BOARD_INCORECT_VALUES);
-		} else if (!typeBoardIsGrid(typeBoard)) {
-			throw new BoardException(TypeException.TYPE_BOARD_GRID);
-		} else if (typeBoard.length != row || typeBoard[0].length != column) {
-			throw new BoardException(TypeException.TYPE_BORD_SIZE);
-		} else if (colorMap == null && imageMap == null) {
-			throw new BoardException(TypeException.DESIGN_WAS_NOT_SPECIFIED);
-		} else if (!mapTypeMatch(colorMap, cellType)) {
-			throw new BoardException(TypeException.COLOR_MAP_TYPE);
-		} else if (!mapTypeMatch(imageMap, cellType)) {
-			throw new BoardException(TypeException.COLOR_MAP_TYPE);
-		} else if (!typeBoardMatch(typeBoard, cellType)) {
-			throw new BoardException(TypeException.TYPE_BOARD_TYPE);
-		}
+	public Board() {
+		row = 5;
+		column = 5;
 
 		this.globalPane = new BorderPane();
 		board = new Cell[row][column];
 		this.boardPane = new GridPane();
-		GlobalValues.CELL_HEIGHT = cellHeight;
-		GlobalValues.CELL_WIDTH = cellWidth;
+		GlobalValues.CELL_HEIGHT = 100;
+		GlobalValues.CELL_WIDTH = 100;
 
+		HashMap<String, Color> colorMap = new HashMap<>();
+		colorMap.put("empty", Color.WHITE);
+		colorMap.put("wall", Color.BROWN);
 		GlobalValues.DESIGN_COLOR = colorMap;
-		GlobalValues.DESIGN_IMAGE = imageMap;
 
-		boardPane.setPrefSize(GlobalValues.CELL_WIDTH * column,
+		boardPane.setMinSize(GlobalValues.CELL_WIDTH * column,
 				GlobalValues.CELL_HEIGHT * row);
 
-		this.row = row;
-		this.column = column;
-		this.cellType = cellType;
+		this.areaTop = null;
+		this.areaBot = null;
+		this.areaLeft = null;
+		this.areaRight = null;
 
-		this.areaTop = areaTop;
-		this.areaBot = areaBot;
-		this.areaLeft = areaLeft;
-		this.areaRight = areaRight;
+		String[][] backgroundBoard = new String[row][column];
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < column; j++) {
+				if (i == 0 || j == 0 || i == row - 1 || j == column - 1) {
+					backgroundBoard[i][j] = "wall";
+				} else {
+					backgroundBoard[i][j] = "empty";
+				}
+			}
+		}
 
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < column; j++) {
-				board[i][j] = new Cell(typeBoard[i][j]);
+				board[i][j] = new Cell(backgroundBoard[i][j], "");
 				boardPane.add(board[i][j].getDesign(), j, i);
 			}
 		}
 
 		globalPane.setCenter(boardPane);
 
-		globalPane.setPrefSize(boardPane.getPrefWidth() + getAreaWidth(),
-				boardPane.getPrefHeight() + getAreaHeight());
+		globalPane.setMinSize(boardPane.getMinWidth() + getAreaWidth(),
+				boardPane.getMinHeight() + getAreaHeight());
+
+	}
+
+	public Board(int row, int column, int cellWidth, int cellHeight,
+			ArrayList<String> cellType, String[][] backgroundBoard,
+			String[][] agentBoard, HashMap<String, Color> colorMap,
+			HashMap<String, Image> imageMap, Area areaTop, Area areaBot,
+			Area areaLeft, Area areaRight) throws BoardException {
+
+		
+		this.row = row;
+		this.column = column;
+		this.cellType = cellType;
+
+		this.backgroundBoard = backgroundBoard;
+		this.agentBoard = agentBoard;
+		
+		this.areaTop = areaTop;
+		this.areaBot = areaBot;
+		this.areaLeft = areaLeft;
+		this.areaRight = areaRight;
+		
+		GlobalValues.CELL_HEIGHT = cellHeight;
+		GlobalValues.CELL_WIDTH = cellWidth;
+
+		GlobalValues.DESIGN_COLOR = colorMap;
+		GlobalValues.DESIGN_IMAGE = imageMap;
+		
+		ExceptionCheck.checkError(row, column, backgroundBoard, agentBoard, cellType);
+
+		this.globalPane = new BorderPane();
+		board = new Cell[row][column];
+		this.boardPane = new GridPane();
+	
+
+		boardPane.setMinSize(GlobalValues.CELL_WIDTH * column,
+				GlobalValues.CELL_HEIGHT * row);
+
+		
+
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < column; j++) {
+				if(agentBoard!= null){
+					board[i][j] = new Cell(backgroundBoard[i][j], agentBoard[i][j]);
+				}else{
+					board[i][j] = new Cell(backgroundBoard[i][j], null);
+				}
+				boardPane.add(board[i][j].getDesign(), j, i);
+			}
+		}
+
+		globalPane.setCenter(boardPane);
+
+		globalPane.setMinSize(boardPane.getMinWidth() + getAreaWidth(),
+				boardPane.getMinHeight() + getAreaHeight());
 
 	}
 
@@ -87,11 +137,11 @@ public class Board {
 	}
 
 	public double getWidth() {
-		return globalPane.getPrefWidth();
+		return globalPane.getMinWidth();
 	}
 
 	public double getHeight() {
-		return globalPane.getPrefHeight();
+		return globalPane.getMinHeight();
 	}
 
 	public void setCellStroke(double width, Color color) throws BoardException {
@@ -102,14 +152,13 @@ public class Board {
 				GlobalValues.CELL_STROKE_WIDTH = width;
 
 				boardPane
-						.setPrefSize(
+						.setMinSize(
 								(GlobalValues.CELL_WIDTH + (GlobalValues.CELL_STROKE_WIDTH))
 										* column,
 								(GlobalValues.CELL_HEIGHT + (GlobalValues.CELL_STROKE_WIDTH))
 										* row);
-				globalPane.setPrefSize(boardPane.getPrefWidth()
-						+ getAreaWidth(), boardPane.getPrefHeight()
-						+ getAreaHeight());
+				globalPane.setMinSize(boardPane.getMinWidth() + getAreaWidth(),
+						boardPane.getMinHeight() + getAreaHeight());
 				for (int i = 0; i < row; i++) {
 					for (int j = 0; j < column; j++) {
 						board[i][j].setStroke();
@@ -124,40 +173,6 @@ public class Board {
 
 	}
 
-	private boolean typeBoardIsGrid(String[][] typeBoard) {
-		int line = typeBoard.length;
-
-		for (int i = 0; i < typeBoard.length; i++) {
-			if (typeBoard[i].length != line) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	private boolean mapTypeMatch(HashMap<String, ?> map,
-			ArrayList<String> cellType) {
-		if (map != null) {
-			for (String type : map.keySet()) {
-				if (!cellType.contains(type)) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-
-	private boolean typeBoardMatch(String[][] typeBoard,
-			ArrayList<String> cellType) {
-		for (int i = 0; i < typeBoard.length; i++) {
-			for (int j = 0; j < typeBoard[0].length; j++) {
-				if (!cellType.contains(typeBoard[i][j])) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
 
 	private double getAreaWidth() {
 		double areaWidth = 0;
@@ -186,5 +201,8 @@ public class Board {
 		}
 		return areaHeight;
 	}
+
+	
+	
 
 }

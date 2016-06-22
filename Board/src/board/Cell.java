@@ -5,11 +5,13 @@ import javafx.scene.paint.Color;
 
 public class Cell extends DesignCell{
 	
-	private String type;
+	private String backgroundType;
+	private String agentType;
 	
-	public Cell(String type){
-		super(type);
-		this.type = type;
+	public Cell(String backgroundType, String agentType){
+		super(backgroundType,agentType);
+		this.backgroundType = backgroundType;
+		this.agentType = agentType;
 	}
 
 }
