@@ -48,15 +48,11 @@ public class DesignCell {
 		if (GlobalValues.DESIGN_IMAGE != null && agentType != null) {
 			if(GlobalValues.DESIGN_IMAGE.containsKey(agentType)){
 				agentImgView = new ImageView();
-				agentImgView.setImage(GlobalValues.DESIGN_IMAGE.get(backgroundType));
+				agentImgView.setImage(GlobalValues.DESIGN_IMAGE.get(agentType));
 				agentImgView.setPreserveRatio(false);
 				agentImgView.setFitWidth(GlobalValues.CELL_WIDTH);
-				agentImgView.setFitHeight(GlobalValues.CELL_HEIGHT);
-				System.out.println("design agent img "+agentImgView.getImage());
-				
-				System.out.println("size pane :"+cellPane.getChildren().size());
+				agentImgView.setFitHeight(GlobalValues.CELL_HEIGHT);				
 				cellPane.getChildren().add(agentImgView);
-				System.out.println("size pane :"+cellPane.getChildren().size());
 			}
 		}	
 	}

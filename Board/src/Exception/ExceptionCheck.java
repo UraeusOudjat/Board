@@ -11,13 +11,14 @@ import javafx.scene.image.Image;
 
 public class ExceptionCheck {
 
-
-	public static void checkError(int row, int column, String[][] backgroundBoard, String[][]agentBoard, ArrayList<String> cellType) throws BoardException {
+	public static void checkError(int row, int column,
+			String[][] backgroundBoard, String[][] agentBoard,
+			ArrayList<String> cellType) throws BoardException {
 		if (row <= 0 || column <= 0) {
 			throw new BoardException(TypeException.BOARD_INCORECT_VALUES);
-		}else if(cellType == null){
+		} else if (cellType == null) {
 			throw new BoardException(TypeException.CELL_TYPE_UNDEFINED);
-			
+
 		} else if (!typeBoardIsGrid(backgroundBoard)) {
 			throw new BoardException(TypeException.BACKGROUND_BOARD_GRID);
 
@@ -31,11 +32,18 @@ public class ExceptionCheck {
 		} else if (!boardMatch(backgroundBoard, cellType)) {
 			throw new BoardException(TypeException.BACKGROUND_BOARD_TYPE);
 
-		}else if(agentBoard != null){
+		} else if (GlobalValues.DESIGN_COLOR == null
+				&& GlobalValues.DESIGN_IMAGE == null) {
+			throw new BoardException(TypeException.DESIGN_WAS_NOT_SPECIFIED);
+
+		}
+
+		if (agentBoard != null) {
 			if (!typeBoardIsGrid(agentBoard)) {
 				throw new BoardException(TypeException.AGENT_BOARD_GRID);
 
-			} else if (agentBoard.length != row || agentBoard[0].length != column) {
+			} else if (agentBoard.length != row
+					|| agentBoard[0].length != column) {
 				throw new BoardException(TypeException.AGENT_BORD_SIZE);
 
 			} else if (boardContainNullValues(agentBoard)) {
@@ -44,25 +52,28 @@ public class ExceptionCheck {
 			} else if (!boardMatch(agentBoard, cellType)) {
 				throw new BoardException(TypeException.AGENT_BOARD_TYPE);
 			}
-		
-		} else if (GlobalValues.DESIGN_COLOR == null && GlobalValues.DESIGN_IMAGE == null) {
-			throw new BoardException(TypeException.DESIGN_WAS_NOT_SPECIFIED);
-
-		} else if (!mapTypeMatch(GlobalValues.DESIGN_COLOR, cellType)) {
-			throw new BoardException(TypeException.COLOR_MAP_TYPE);
-			
-		}else if(mapContainNullValues(GlobalValues.DESIGN_COLOR)){
-			throw new BoardException(TypeException.COLOR_MAP_EMPTY);
-			
-		} else if (!mapTypeMatch(GlobalValues.DESIGN_IMAGE, cellType)) {
-			throw new BoardException(TypeException.IMAGE_MAP_TYPE);
-			
-		}else if(mapContainNullValues(GlobalValues.DESIGN_IMAGE)){
-			throw new BoardException(TypeException.IMAGE_MAP_EMPTY);
 		}
-			
+		if (GlobalValues.DESIGN_COLOR != null) {
+			if (!mapTypeMatch(GlobalValues.DESIGN_COLOR, cellType)) {
+				throw new BoardException(TypeException.COLOR_MAP_TYPE);
+
+			} else if (mapContainNullValues(GlobalValues.DESIGN_COLOR)) {
+				throw new BoardException(TypeException.COLOR_MAP_EMPTY);
+
+			}
+		}
+
+		if (GlobalValues.DESIGN_IMAGE != null) {
+			if (!mapTypeMatch(GlobalValues.DESIGN_IMAGE, cellType)) {
+				throw new BoardException(TypeException.IMAGE_MAP_TYPE);
+
+			} else if (mapContainNullValues(GlobalValues.DESIGN_IMAGE)) {
+				throw new BoardException(TypeException.IMAGE_MAP_EMPTY);
+			}
+		}
+
 	}
-	
+
 	private static boolean typeBoardIsGrid(String[][] typeBoard) {
 		int line = typeBoard.length;
 
@@ -86,7 +97,8 @@ public class ExceptionCheck {
 		return true;
 	}
 
-	private static boolean boardMatch(String[][] board, ArrayList<String> cellType) {
+	private static boolean boardMatch(String[][] board,
+			ArrayList<String> cellType) {
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board[0].length; j++) {
 				if (!cellType.contains(board[i][j])) {
@@ -107,18 +119,17 @@ public class ExceptionCheck {
 		}
 		return false;
 	}
-	
-	private static boolean mapContainNullValues(HashMap<String, ?> map){
+
+	private static boolean mapContainNullValues(HashMap<String, ?> map) {
 		Iterator<?> it = map.entrySet().iterator();
-	    while (it.hasNext()) {
-	        @SuppressWarnings("rawtypes")
-			Map.Entry pair = (Map.Entry)it.next();
-	        if(pair.getValue() == null){
-	        	return true;
-	        }
-	        it.remove(); // avoids a ConcurrentModificationException
-	    }
-	    return false;
+		while (it.hasNext()) {
+			@SuppressWarnings("rawtypes")
+			Map.Entry pair = (Map.Entry) it.next();
+			if (pair.getValue() == null) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
