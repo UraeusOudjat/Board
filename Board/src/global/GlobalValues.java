@@ -12,6 +12,6 @@ public class GlobalValues {
 	public static boolean CELL_STROKE = false;
 	public static Color CELL_STROKE_COLOR = Color.BLACK;
 	public static double CELL_STROKE_WIDTH = 0.5;
-	public static HashMap<String, Color> DESIGN_COLOR = null;
-	public static HashMap<String, Image> DESIGN_IMAGE = null;
+	public static HashMap<Enum<?>, Color> DESIGN_COLOR = null;
+	public static HashMap<Enum<?>, Image> DESIGN_IMAGE = null;
 }

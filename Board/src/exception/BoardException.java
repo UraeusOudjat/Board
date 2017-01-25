@@ -1,4 +1,4 @@
-package Exception;
+package exception;
 
 public class BoardException extends Exception {
 
@@ -79,6 +79,25 @@ public class BoardException extends Exception {
 		case STROKE_WIDTH:
 			System.err.println("Stroke width are null or negative.");
 			break;
+			
+		case AGENT_BOARD_BACKGROUND_BOARD_TYPE_UNMATCH:
+			System.err.println("Agent Board and Background Board doesn't have the same Enum Type.");
+			break;
+			
+		case AGENT_BOARD_DESIGN_COLOR_TYPE_UNMATCH:
+			System.err.println("Agent Board and Color Map doesn't have the same Enum Type.");
+			break;
+		
+			
+		case AGENT_BOARD_DESIGN_IMAGE_TYPE_UNMATCH :
+			System.err.println("Agent Board and Image Map doesn't have the same Enum Type.");
+			break;
+			
+		case DESIGN_COLOR_DESIGN_IMAGE_TYPE_UNMATCH :
+			System.err.println("Color Map and Image Map doesn't have the same Enum Type");
+			break;
+		
+			
 		default:
 			System.err.println("Board unknow error.");
 			break;

@@ -1,0 +1,7 @@
+package example;
+
+public enum ChessType {
+	BLACK_CELL, WHITE_CELL, EMPTY_CELL, 
+	PAWN_W, ROOK_W, KNIGHT_W, BISHOP_W, QUEEN_W, KING_W, 
+	PAWN_B, ROOK_B, KNIGHT_B, BISHOP_B, QUEEN_B, KING_B
+}
