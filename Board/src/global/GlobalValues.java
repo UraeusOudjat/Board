@@ -14,4 +14,5 @@ public class GlobalValues {
 	public static double CELL_STROKE_WIDTH = 0.5;
 	public static HashMap<Enum<?>, Color> DESIGN_COLOR = null;
 	public static HashMap<Enum<?>, Image> DESIGN_IMAGE = null;
+	public static Enum<?> EMPTY_AGENT_TYPE = null;
 }

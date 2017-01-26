@@ -10,9 +10,9 @@ public class Index {
 	 * @param x
 	 * @param y
 	 */
-	public Index(int i, int j) {
-		this.x = j;
-		this.y = i;
+	public Index(int x, int y) {
+		this.x = x;
+		this.y = y;
 	}
 
 	public int getX() {

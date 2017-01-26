@@ -61,6 +61,7 @@ public class ChessExampleMain extends Application {
 			HashMap<ChessType, Color> colorMap = new HashMap<>();
 			colorMap.put(ChessType.BLACK_CELL, Color.DIMGRAY);
 			colorMap.put(ChessType.WHITE_CELL, Color.BEIGE);
+			colorMap.put(ChessType.MOVE_CELL, Color.ORANGERED);
 			colorMap.put(ChessType.EMPTY_CELL, Color.TRANSPARENT);
 
 			// It will not display but if they have a modification or an error
@@ -111,14 +112,22 @@ public class ChessExampleMain extends Application {
 			imageMap.put(ChessType.QUEEN_W, queenWhite);
 			imageMap.put(ChessType.KING_W, kingWhite);
 
-			Board board = new Board(cellWidth, cellHeight, backgroundBoard, agentBoard, colorMap, imageMap, null, null,
+			Board board = new Board(cellWidth, cellHeight,ChessType.EMPTY_CELL, backgroundBoard, agentBoard, colorMap, imageMap, null, null,
 					null, null);
 			
 			board.setCellStroke(1, Color.BLACK);
-			
+						
 			Scene scene = new Scene(board.getGlobalPane(), board.getWidth(), board.getHeight());
 			primaryStage.setScene(scene);
 			primaryStage.show();
+			
+			ChessMousseHandler handler = new ChessMousseHandler(board.getBoard(), row, column);
+			for (int i = 0; i < row; i++) {
+				for (int j = 0; j < column; j++) {
+					board.getBoard()[i][j].setOnMouseClicked(handler);
+				}
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -15,11 +15,10 @@ import javafx.scene.paint.Color;
 public class Board {
 	private int row;
 	private int column;
-	// private ArrayList<String> cellType;
-	private Cell[][] board;
+	
 	private BorderPane globalPane;
 	private GridPane boardPane;
-
+	private Cell[][] board = null;
 	private Area areaTop;
 	private Area areaBot;
 	private Area areaLeft;
@@ -39,8 +38,7 @@ public class Board {
 	 *            width of each cells
 	 * @param cellHeight
 	 *            height of each cell
-	 * @param cellType
-	 *            list who contain ALL type of different cells
+	 * @param emptyAgentType The default agent type who represent empty cell
 	 * @param backgroundBoard
 	 *            array who represent the background board, each cell can have a
 	 *            type, who must be contain in the cellType list
@@ -58,8 +56,8 @@ public class Board {
 	 * @throws BoardException
 	 */
 	@SuppressWarnings("unchecked")
-	public Board(int cellWidth, int cellHeight, Enum<?>[][] backgroundBoard, Enum<?>[][] agentBoard,
-			HashMap<?, Color> colorMap, HashMap<?, Image> imageMap, Area areaTop, Area areaBot, Area areaLeft,
+	public Board(int cellWidth, int cellHeight,Enum<?> emptyAgentType ,Enum<?>[][] backgroundBoard, Enum<?>[][] agentBoard,
+			HashMap<?, Color> colorMap, HashMap<?, Image> imageMap,Area areaTop, Area areaBot, Area areaLeft,
 			Area areaRight) throws BoardException {
 
 		// XXX : is it really useful to send area ?
@@ -75,9 +73,10 @@ public class Board {
 		GlobalValues.CELL_HEIGHT = cellHeight;
 		GlobalValues.CELL_WIDTH = cellWidth;
 
+		GlobalValues.EMPTY_AGENT_TYPE = emptyAgentType;
 		GlobalValues.DESIGN_COLOR = (HashMap<Enum<?>, Color>) colorMap;
 		GlobalValues.DESIGN_IMAGE = (HashMap<Enum<?>, Image>) imageMap;
-
+		
 		/// XXX : currently agent board,background board, color map and image
 		/// map must have the same enum type but it's not really developer
 		/// friendly i have to make change for check each type in each board and
@@ -98,7 +97,7 @@ public class Board {
 				} else {
 					board[i][j] = new Cell(backgroundBoard[i][j], null,i,j);
 				}
-				boardPane.add(board[i][j].getDesign(), j, i);
+				boardPane.add(board[i][j], j, i);
 			}
 		}
 
@@ -106,6 +105,10 @@ public class Board {
 
 		globalPane.setMinSize(boardPane.getMinWidth() + getAreaWidth(), boardPane.getMinHeight() + getAreaHeight());
 
+	}
+	
+	public Cell[][] getBoard(){
+		return board;
 	}
 
 	/**
