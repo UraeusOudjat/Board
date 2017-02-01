@@ -1,4 +1,4 @@
-package example;
+package example.chess;
 
 import java.util.HashMap;
 
@@ -112,7 +112,7 @@ public class ChessExampleMain extends Application {
 			imageMap.put(ChessType.QUEEN_W, queenWhite);
 			imageMap.put(ChessType.KING_W, kingWhite);
 
-			Board board = new Board(cellWidth, cellHeight,ChessType.EMPTY_CELL, backgroundBoard, agentBoard, colorMap, imageMap, null, null,
+			Board board = new Board(cellWidth, cellHeight, backgroundBoard, agentBoard, colorMap, imageMap, null, null,
 					null, null);
 			
 			board.setCellStroke(1, Color.BLACK);

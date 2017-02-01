@@ -1,4 +1,4 @@
-package example;
+package example.chess;
 
 public enum ChessType {
 	BLACK_CELL, WHITE_CELL, EMPTY_CELL,MOVE_CELL, 

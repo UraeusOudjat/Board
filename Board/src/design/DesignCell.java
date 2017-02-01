@@ -113,14 +113,14 @@ public class DesignCell extends StackPane {
 		return cellPane;
 	}
 
-	public Node getAgent() {
+	public Node getAgentDesign() {
 		if (agentImgView != null)
 			return agentImgView;
 		else
 			return agentCircle;
 	}
 
-	public Node getBackgroundCell() {
+	public Node getBackgroundDesign() {
 		if (backgroundImgView != null)
 			return backgroundImgView;
 		else

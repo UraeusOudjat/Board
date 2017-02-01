@@ -56,7 +56,7 @@ public class Board {
 	 * @throws BoardException
 	 */
 	@SuppressWarnings("unchecked")
-	public Board(int cellWidth, int cellHeight,Enum<?> emptyAgentType ,Enum<?>[][] backgroundBoard, Enum<?>[][] agentBoard,
+	public Board(int cellWidth, int cellHeight,Enum<?>[][] backgroundBoard, Enum<?>[][] agentBoard,
 			HashMap<?, Color> colorMap, HashMap<?, Image> imageMap,Area areaTop, Area areaBot, Area areaLeft,
 			Area areaRight) throws BoardException {
 
@@ -73,7 +73,6 @@ public class Board {
 		GlobalValues.CELL_HEIGHT = cellHeight;
 		GlobalValues.CELL_WIDTH = cellWidth;
 
-		GlobalValues.EMPTY_AGENT_TYPE = emptyAgentType;
 		GlobalValues.DESIGN_COLOR = (HashMap<Enum<?>, Color>) colorMap;
 		GlobalValues.DESIGN_IMAGE = (HashMap<Enum<?>, Image>) imageMap;
 		
