@@ -1,6 +1,6 @@
 package exception;
 
-import global.GlobalValues;
+import global.BoardGlobalValues;
 
 public class ExceptionCheckEnum {
 
@@ -20,8 +20,8 @@ public class ExceptionCheckEnum {
 		} else if (boardContainNullValues(backgroundBoard)) {
 			throw new BoardException(TypeException.BACKGROUND_BOARD_EMPTY);
 
-		} else if (GlobalValues.DESIGN_COLOR == null
-				&& GlobalValues.DESIGN_IMAGE == null) {
+		} else if (BoardGlobalValues.DESIGN_COLOR == null
+				&& BoardGlobalValues.DESIGN_IMAGE == null) {
 			throw new BoardException(TypeException.DESIGN_WAS_NOT_SPECIFIED);
 
 		}
@@ -45,20 +45,20 @@ public class ExceptionCheckEnum {
 		}
 		
 		
-		if (GlobalValues.DESIGN_COLOR != null) {
-			if(!agentBoard[0][0].getClass().equals(GlobalValues.DESIGN_COLOR.keySet().iterator().next().getClass())){
+		if (BoardGlobalValues.DESIGN_COLOR != null) {
+			if(!agentBoard[0][0].getClass().equals(BoardGlobalValues.DESIGN_COLOR.keySet().iterator().next().getClass())){
 				throw new BoardException(TypeException.AGENT_BOARD_DESIGN_COLOR_TYPE_UNMATCH);
 			}
 		}
 		
-		if (GlobalValues.DESIGN_IMAGE != null) {
-			if(!agentBoard[0][0].getClass().equals(GlobalValues.DESIGN_IMAGE.keySet().iterator().next().getClass())){
+		if (BoardGlobalValues.DESIGN_IMAGE != null) {
+			if(!agentBoard[0][0].getClass().equals(BoardGlobalValues.DESIGN_IMAGE.keySet().iterator().next().getClass())){
 				throw new BoardException(TypeException.AGENT_BOARD_DESIGN_IMAGE_TYPE_UNMATCH);
 			}
 		}
 		
-		if(GlobalValues.DESIGN_COLOR != null && GlobalValues.DESIGN_IMAGE != null){
-			if(!GlobalValues.DESIGN_COLOR.keySet().iterator().next().getClass().equals(GlobalValues.DESIGN_IMAGE.keySet().iterator().next().getClass())){
+		if(BoardGlobalValues.DESIGN_COLOR != null && BoardGlobalValues.DESIGN_IMAGE != null){
+			if(!BoardGlobalValues.DESIGN_COLOR.keySet().iterator().next().getClass().equals(BoardGlobalValues.DESIGN_IMAGE.keySet().iterator().next().getClass())){
 				throw new BoardException(TypeException.DESIGN_COLOR_DESIGN_IMAGE_TYPE_UNMATCH);
 			}
 		}

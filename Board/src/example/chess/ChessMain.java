@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class ChessExampleMain extends Application {
+public class ChessMain extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {

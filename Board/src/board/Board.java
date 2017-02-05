@@ -6,7 +6,7 @@ import design.Area;
 import exception.BoardException;
 import exception.ExceptionCheckEnum;
 import exception.TypeException;
-import global.GlobalValues;
+import global.BoardGlobalValues;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -70,11 +70,11 @@ public class Board {
 		this.areaLeft = areaLeft;
 		this.areaRight = areaRight;
 
-		GlobalValues.CELL_HEIGHT = cellHeight;
-		GlobalValues.CELL_WIDTH = cellWidth;
+		BoardGlobalValues.CELL_HEIGHT = cellHeight;
+		BoardGlobalValues.CELL_WIDTH = cellWidth;
 
-		GlobalValues.DESIGN_COLOR = (HashMap<Enum<?>, Color>) colorMap;
-		GlobalValues.DESIGN_IMAGE = (HashMap<Enum<?>, Image>) imageMap;
+		BoardGlobalValues.DESIGN_COLOR = (HashMap<Enum<?>, Color>) colorMap;
+		BoardGlobalValues.DESIGN_IMAGE = (HashMap<Enum<?>, Image>) imageMap;
 		
 		/// XXX : currently agent board,background board, color map and image
 		/// map must have the same enum type but it's not really developer
@@ -87,7 +87,7 @@ public class Board {
 		board = new Cell[row][column];
 		this.boardPane = new GridPane();
 
-		boardPane.setMinSize(GlobalValues.CELL_WIDTH * column, GlobalValues.CELL_HEIGHT * row);
+		boardPane.setMinSize(BoardGlobalValues.CELL_WIDTH * column, BoardGlobalValues.CELL_HEIGHT * row);
 
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < column; j++) {
@@ -130,12 +130,12 @@ public class Board {
 	public void setCellStroke(double width, Color color) throws BoardException {
 		if (width > 0) {
 			if (color != null) {
-				GlobalValues.CELL_STROKE = true;
-				GlobalValues.CELL_STROKE_COLOR = color;
-				GlobalValues.CELL_STROKE_WIDTH = width;
+				BoardGlobalValues.CELL_STROKE = true;
+				BoardGlobalValues.CELL_STROKE_COLOR = color;
+				BoardGlobalValues.CELL_STROKE_WIDTH = width;
 
-				boardPane.setMinSize((GlobalValues.CELL_WIDTH + (GlobalValues.CELL_STROKE_WIDTH)) * column,
-						(GlobalValues.CELL_HEIGHT + (GlobalValues.CELL_STROKE_WIDTH)) * row);
+				boardPane.setMinSize((BoardGlobalValues.CELL_WIDTH + (BoardGlobalValues.CELL_STROKE_WIDTH)) * column,
+						(BoardGlobalValues.CELL_HEIGHT + (BoardGlobalValues.CELL_STROKE_WIDTH)) * row);
 				globalPane.setMinSize(boardPane.getMinWidth() + getAreaWidth(),
 						boardPane.getMinHeight() + getAreaHeight());
 				for (int i = 0; i < row; i++) {

@@ -17,11 +17,9 @@ public class ChessMousseHandler implements EventHandler<MouseEvent> {
 	private Cell selectedPieceCell;
 	private ArrayList<Index> indexMoveCell = new ArrayList<>();
 	private ArrayList<ChessType> backgroundMoveCell = new ArrayList<>();
-	private PlayerTurn playerTurn = PlayerTurn.WHITE;
-	private String playerColor;
-	private String opponentColor;
+	private PlayerColor playerColor = PlayerColor.WHITE;
+	private String playerColorString;
 	
-
 	public ChessMousseHandler(Cell[][] board, int row, int column) {
 		this.board = board;
 		this.row = row;
@@ -34,38 +32,86 @@ public class ChessMousseHandler implements EventHandler<MouseEvent> {
 		Cell cell = (Cell) event.getSource();
 		((Node) (event.getSource())).toFront();
 
+		playerColorString = (playerColor.equals(PlayerColor.WHITE)) ? "_W" : "_B";
 
-		playerColor = (playerTurn.equals(PlayerTurn.WHITE)) ? "_W" : "_B";
-		opponentColor = (playerTurn.equals(PlayerTurn.WHITE)) ? "_B" : "_W";
+		if (cell.getAgentType().equals(ChessType.valueOf("PAWN" + playerColorString))) {
+			selectedPieceCell = Pawn.setCanMoveCell(playerColor, row, column, cell, backgroundMoveCell, board,
+					indexMoveCell, lastPieceMovedCell);
 
-			if (cell.getAgentType().equals(ChessType.valueOf("PAWN"+playerColor))) {
-				selectedPieceCell = Pawn.setCanMoveCell(playerTurn, row, column, cell, backgroundMoveCell, board, indexMoveCell, lastPieceMovedCell);
-					
-			} else if (cell.getAgentType().equals(ChessType.ROOK_W) && playerTurn.equals(PlayerTurn.WHITE)) {
-				//We display the cell where the white rook can moove only if it's the white turn
-				selectedPieceCell = Rook.setCanMoveCell(playerTurn, row, column, cell, backgroundMoveCell, board, indexMoveCell, lastPieceMovedCell);
+		} else if (cell.getAgentType().equals(ChessType.ROOK_W) && playerColor.equals(PlayerColor.WHITE)) {
+			// We display the cell where the white rook can move only if it's
+			// the white turn
+			selectedPieceCell = Rook.setCanMoveCell(playerColor, row, column, cell, backgroundMoveCell, board,
+					indexMoveCell, lastPieceMovedCell);
 
-			}else if (cell.getAgentType().equals(ChessType.ROOK_B) && playerTurn.equals(PlayerTurn.BLACK)) {
-				//We display the cell where the black rook can moove only if it's the black turn
-				selectedPieceCell = Rook.setCanMoveCell(playerTurn, row, column, cell, backgroundMoveCell, board, indexMoveCell, lastPieceMovedCell);
+		} else if (cell.getAgentType().equals(ChessType.ROOK_B) && playerColor.equals(PlayerColor.BLACK)) {
+			// We display the cell where the black rook can move only if it's
+			// the black turn
+			selectedPieceCell = Rook.setCanMoveCell(playerColor, row, column, cell, backgroundMoveCell, board,
+					indexMoveCell, lastPieceMovedCell);
 
-			} else if (cell.getBackgroundType().equals(ChessType.MOVE_CELL)) {
+		} else if (cell.getAgentType().equals(ChessType.KNIGHT_W) && playerColor.equals(PlayerColor.WHITE)) {
+			// We display the cell where the white knight can move only if it's
+			// the white turn
+			selectedPieceCell = Knight.setCanMoveCell(playerColor, row, column, cell, backgroundMoveCell, board,
+					indexMoveCell, lastPieceMovedCell);
 			
-				if(selectedPieceCell.getAgentType().toString().contains("PAWN")){
-					lastPieceMovedCell = Pawn.move(playerTurn,board, cell, column, backgroundMoveCell, indexMoveCell);
-				}else if(selectedPieceCell.getAgentType().toString().contains("ROOK")){
-					lastPieceMovedCell = Rook.move(playerTurn, board, cell, column, backgroundMoveCell, indexMoveCell);
-				}
-				
-				//We swap the color of the player turn
-				playerTurn = (playerTurn.equals(PlayerTurn.WHITE))? PlayerTurn.BLACK : PlayerTurn.WHITE;
+		} else if (cell.getAgentType().equals(ChessType.KNIGHT_B) && playerColor.equals(PlayerColor.BLACK)) {
+			// We display the cell where the black knight can move only if it's
+			// the black turn
+			selectedPieceCell = Knight.setCanMoveCell(playerColor, row, column, cell, backgroundMoveCell, board,
+					indexMoveCell, lastPieceMovedCell);
 
+		} else if (cell.getAgentType().equals(ChessType.BISHOP_W) && playerColor.equals(PlayerColor.WHITE)) {
+			// We display the cell where the white bishop can move only if it's
+			// the white turn
+			selectedPieceCell = Bishop.setCanMoveCell(playerColor, row, column, cell, backgroundMoveCell, board,
+					indexMoveCell, lastPieceMovedCell);
 
-			} else {
+		} else if (cell.getAgentType().equals(ChessType.BISHOP_B) && playerColor.equals(PlayerColor.BLACK)) {
+			// We display the cell where the black bishop can move only if it's
+			// the black turn
+			selectedPieceCell = Bishop.setCanMoveCell(playerColor, row, column, cell, backgroundMoveCell, board,
+					indexMoveCell, lastPieceMovedCell);
 
+		}else if (cell.getAgentType().equals(ChessType.QUEEN_W) && playerColor.equals(PlayerColor.WHITE)) {
+			// We display the cell where the white queen can move only if it's
+			// the white turn
+			selectedPieceCell = Queen.setCanMoveCell(playerColor, row, column, cell, backgroundMoveCell, board,
+					indexMoveCell, lastPieceMovedCell);
+
+		} else if (cell.getAgentType().equals(ChessType.QUEEN_B) && playerColor.equals(PlayerColor.BLACK)) {
+			// We display the cell where the black queen can move only if it's
+			// the black turn
+			selectedPieceCell = Queen.setCanMoveCell(playerColor, row, column, cell, backgroundMoveCell, board,
+					indexMoveCell, lastPieceMovedCell);
+
+		}else if (cell.getAgentType().equals(ChessType.KING_W) && playerColor.equals(PlayerColor.WHITE)) {
+			System.out.println(ChessGlobal.piecePositions.toString());
+
+		} else if (cell.getBackgroundType().equals(ChessType.MOVE_CELL)) {
+
+			if (selectedPieceCell.getAgentType().toString().contains("PAWN")) {
+				lastPieceMovedCell = Pawn.move(playerColor, board, cell, column, backgroundMoveCell, indexMoveCell);
+			} else if (selectedPieceCell.getAgentType().toString().contains("ROOK")) {
+				lastPieceMovedCell = Rook.move(playerColor, board, cell, column, backgroundMoveCell, indexMoveCell);
+			} else if (selectedPieceCell.getAgentType().toString().contains("KNIGHT")) {
+				lastPieceMovedCell = Knight.move(playerColor, board, cell, column, backgroundMoveCell, indexMoveCell);
+			} else if (selectedPieceCell.getAgentType().toString().contains("BISHOP")) {
+				lastPieceMovedCell = Bishop.move(playerColor, board, cell, column, backgroundMoveCell, indexMoveCell);
+			}else if (selectedPieceCell.getAgentType().toString().contains("QUEEN")) {
+				lastPieceMovedCell = Queen.move(playerColor, board, cell, column, backgroundMoveCell, indexMoveCell);
 			}
-	}
 
+			// We swap the color of the player turn
+			playerColor = (playerColor.equals(PlayerColor.WHITE)) ? PlayerColor.BLACK : PlayerColor.WHITE;
+			
+			System.out.println("King "+playerColor.toString());
+			Check.isKingCheck(playerColor, board);
+		} else {
+
+		}
+	}
 
 	public void moveTo(Cell cell, Index goalIndex) {
 

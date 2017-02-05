@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import board.Cell;
 import board.Index;
 
-public class Rook {
+public class Queen {
 
 	private static String opponentColor;
 	private static boolean canMove = false;
 	private static Cell selectedPieceCell;
 
+	// XXX : Duplicate code of Rook and Bishop Code
 	public static Cell setCanMoveCell(PlayerColor playerColor, int row, int column, Cell cell,
 			ArrayList<ChessType> backgroundMoveCell, Cell[][] board, ArrayList<Index> indexMoveCell,
 			Cell lastPieceMovedCell) {
@@ -22,6 +23,8 @@ public class Rook {
 
 		// We removed the other move case
 		ChessGlobal.removeMoveCase(backgroundMoveCell, board, indexMoveCell);
+
+		// Rook Move
 
 		// Move to top
 		while (x - 1 >= 0 && board[x - 1][y].getAgentType().equals(ChessType.EMPTY_CELL)) {
@@ -87,6 +90,81 @@ public class Rook {
 			canMove = true;
 		}
 
+		// Bishop Move
+
+		x = cell.getIndex().getX();
+		y = cell.getIndex().getY();
+
+		// Move to top-left
+		while (x - 1 >= 0 && y - 1 >= 0 && board[x - 1][y - 1].getAgentType().equals(ChessType.EMPTY_CELL)) {
+			indexMoveCell.add(new Index(x - 1, y - 1));
+			backgroundMoveCell.add((ChessType) board[x - 1][y - 1].getBackgroundType());
+			board[x - 1][y - 1].setBackgroundType(ChessType.MOVE_CELL);
+			canMove = true;
+			x--;
+			y--;
+		}
+		if (x - 1 >= 0 && y - 1 >= 0 && board[x - 1][y - 1].getAgentType().toString().contains(opponentColor)) {
+			indexMoveCell.add(new Index(x - 1, y - 1));
+			backgroundMoveCell.add((ChessType) board[x - 1][y - 1].getBackgroundType());
+			board[x - 1][y - 1].setBackgroundType(ChessType.MOVE_CELL);
+			canMove = true;
+		}
+
+		// Move to bottom-left
+		x = cell.getIndex().getX();
+		y = cell.getIndex().getY();
+		while (x + 1 < row && y - 1 >= 0 && board[x + 1][y - 1].getAgentType().equals(ChessType.EMPTY_CELL)) {
+			indexMoveCell.add(new Index(x + 1, y - 1));
+			backgroundMoveCell.add((ChessType) board[x + 1][y - 1].getBackgroundType());
+			board[x + 1][y - 1].setBackgroundType(ChessType.MOVE_CELL);
+			canMove = true;
+			x++;
+			y--;
+		}
+		if (x + 1 < row && y - 1 >= 0 && board[x + 1][y - 1].getAgentType().toString().contains(opponentColor)) {
+			indexMoveCell.add(new Index(x + 1, y - 1));
+			backgroundMoveCell.add((ChessType) board[x + 1][y - 1].getBackgroundType());
+			board[x + 1][y + -1].setBackgroundType(ChessType.MOVE_CELL);
+			canMove = true;
+		}
+
+		// move to top-right
+		x = cell.getIndex().getX();
+		y = cell.getIndex().getY();
+		while (x - 1 >= 0 && y + 1 < column && board[x - 1][y + 1].getAgentType().equals(ChessType.EMPTY_CELL)) {
+			indexMoveCell.add(new Index(x - 1, y + 1));
+			backgroundMoveCell.add((ChessType) board[x - 1][y + 1].getBackgroundType());
+			board[x - 1][y + 1].setBackgroundType(ChessType.MOVE_CELL);
+			canMove = true;
+			x--;
+			y++;
+		}
+		if (x - 1 >= 0 && y + 1 < column && board[x - 1][y + 1].getAgentType().toString().contains(opponentColor)) {
+			indexMoveCell.add(new Index(x - 1, y + 1));
+			backgroundMoveCell.add((ChessType) board[x - 1][y + 1].getBackgroundType());
+			board[x - 1][y + 1].setBackgroundType(ChessType.MOVE_CELL);
+			canMove = true;
+		}
+
+		// move to bottom-right
+		x = cell.getIndex().getX();
+		y = cell.getIndex().getY();
+		while (x + 1 < row && y + 1 < column && board[x + 1][y + 1].getAgentType().equals(ChessType.EMPTY_CELL)) {
+			indexMoveCell.add(new Index(x + 1, y + 1));
+			backgroundMoveCell.add((ChessType) board[x + 1][y + 1].getBackgroundType());
+			board[x + 1][y + 1].setBackgroundType(ChessType.MOVE_CELL);
+			canMove = true;
+			x++;
+			y++;
+		}
+		if (x + 1 < row && y + 1 < column && board[x + 1][y + 1].getAgentType().toString().contains(opponentColor)) {
+			indexMoveCell.add(new Index(x + 1, y + 1));
+			backgroundMoveCell.add((ChessType) board[x + 1][y + 1].getBackgroundType());
+			board[x + 1][y + 1].setBackgroundType(ChessType.MOVE_CELL);
+			canMove = true;
+		}
+
 		if (canMove) {
 			selectedPieceCell = cell;
 		}
@@ -100,7 +178,7 @@ public class Rook {
 		int x = cell.getIndex().getX();
 		int y = cell.getIndex().getY();
 
-		ChessGlobal.piecePositions.setNewRookPosition(playerColor, new Index(x, y), selectedPieceCell.getIndex());
+		ChessGlobal.piecePositions.setNewQueenPosition(playerColor, new Index(x, y));
 		if(!board[x][y].getAgentType().equals(ChessType.EMPTY_CELL)){
 			ChessGlobal.removePiece(x, y, playerColor, board);
 		}

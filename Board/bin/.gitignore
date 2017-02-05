@@ -1,4 +1,5 @@
-/board/
-/design/
-/global/
 /example/
+/design/
+/board/
+/exception/
+/global/

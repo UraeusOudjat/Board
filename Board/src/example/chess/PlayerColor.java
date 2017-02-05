@@ -1,5 +1,5 @@
 package example.chess;
 
-public enum PlayerTurn {
+public enum PlayerColor {
 	WHITE, BLACK
 }

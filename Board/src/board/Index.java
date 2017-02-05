@@ -32,7 +32,7 @@ public class Index {
 	}
 
 	public boolean isOnTheLeft(Index i){
-		if(x < i.getX())
+		if(y < i.getY())
 			return true;
 		else
 			return false;
@@ -40,25 +40,69 @@ public class Index {
 	}
 	
 	public boolean isOnTheRight(Index i){
-		if(x > i.getX())
+		if(y > i.getY())
 			return true;
 		else
 			return false;
 	}
 	
 	public boolean isOnTheTop(Index i){
-		if(y < i.getY())
+		if(x < i.getX())
 			return true;
 		else
 			return false;
 	}
 	
 	public boolean isOnTheBottom(Index i){
-		if(y > i.getY())
+		if(x > i.getX())
 			return true;
 		else
 			return false;
 	}
+	
+	public boolean isOnTheLeftAndSameRow(Index i){
+		if(y < i.getY() && x == i.getX())
+			return true;
+		else
+			return false;
+		
+	}
+	
+	public boolean isOnTheRightAndSameRow(Index i){
+		if(y > i.getY() && x == i.getX())
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isOnTheTopAndSameColumn(Index i){
+		if(x < i.getX() && y == i.getY())
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isOnTheBottomAndsameColumn(Index i){
+		if(x > i.getX() && y == i.getY())
+			return true;
+		else
+			return false;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		
+		if(obj.getClass().equals(Index.class)){
+			if(this.x == ((Index)obj).getX() && this.y == ((Index)obj).getY())
+				return true;
+			else
+				return false;
+		}else{
+			return false;
+		}
+	}
+	
+	
 	
 	
 }
