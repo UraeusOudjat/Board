@@ -102,12 +102,18 @@ public class ChessMousseHandler implements EventHandler<MouseEvent> {
 			}else if (selectedPieceCell.getAgentType().toString().contains("QUEEN")) {
 				lastPieceMovedCell = Queen.move(playerColor, board, cell, column, backgroundMoveCell, indexMoveCell);
 			}
+			
+			PlayerColor opponentColor = (playerColor.equals(PlayerColor.WHITE)) ? PlayerColor.BLACK : PlayerColor.WHITE;
+
+			
+			System.out.println("End of "+playerColor.toString()+" turn");
+			Check.verifyKingCheck(opponentColor, board);
+			System.out.println("The "+ opponentColor +" King is check :"+ Check.isKingCheck(opponentColor));
 
 			// We swap the color of the player turn
 			playerColor = (playerColor.equals(PlayerColor.WHITE)) ? PlayerColor.BLACK : PlayerColor.WHITE;
 			
-			System.out.println("King "+playerColor.toString());
-			Check.isKingCheck(playerColor, board);
+		
 		} else {
 
 		}

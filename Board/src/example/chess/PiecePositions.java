@@ -25,7 +25,7 @@ public class PiecePositions {
 			PawnBlackPositions.add(new Index(1, j));
 		}
 
-		RookWhitePositions.add(new Index(7, 1));
+		RookWhitePositions.add(new Index(7, 0));
 		RookWhitePositions.add(new Index(7, 7));
 		RookBlackPositions.add(new Index(0, 0));
 		RookBlackPositions.add(new Index(0, 7));

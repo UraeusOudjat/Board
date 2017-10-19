@@ -101,6 +101,12 @@ public class Index {
 			return false;
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "Index x : " + x + " , y : " + y;
+	}
+	
 	
 	
 	
