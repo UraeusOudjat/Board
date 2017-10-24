@@ -9,7 +9,7 @@ public class Check {
 	private static boolean kingBlackCheck = false;
 	
 	
-	//TODO : Add 2 method isWhiteKingCheck and isBlackKingCheck to remove the confusion and to reduce the computing of opponent color
+	//XXX : Refactor : Add 2 method isWhiteKingCheck and isBlackKingCheck to remove the confusion and to reduce the computing of opponent color
 	public static boolean isKingCheck(PlayerColor playerColor){
 		if(playerColor.equals(PlayerColor.WHITE))
 			return kingWhiteCheck;
@@ -19,7 +19,7 @@ public class Check {
 	
 	
 	
-	//TODO : Add 2 method verifyWhiteKingCheck and verifyBlackKingCheck to remove the confusion and to reduce the computing of opponent color
+	//XXX : Refactor : Add 2 method verifyWhiteKingCheck and verifyBlackKingCheck to remove the confusion and to reduce the computing of opponent color
 	/**
 	 * This method verify if the king of the player are check
 	 * @param playerColor

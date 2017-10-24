@@ -113,7 +113,7 @@ public class Knight {
 			ChessGlobal.removePiece(x, y, playerColor, board);
 		}
 		
-		return ChessGlobal.move(x, y, selectedPieceCell, playerColor, board, cell, backgroundMoveCell, indexMoveCell);
+		return ChessGlobal.move(x, y, selectedPieceCell, board, cell, backgroundMoveCell, indexMoveCell);
 	}
 
 }

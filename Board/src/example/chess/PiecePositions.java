@@ -48,6 +48,9 @@ public class PiecePositions {
 
 	}
 
+	
+	//XXX : Maybe it's better to replace the for loop with a break by a do while loop and a boolean ?
+	
 	private ArrayList<Index> replacePosition(ArrayList<Index> positions, Index newPosition, Index oldPosition) {
 		for (int i = 0; i < positions.size(); i++) {
 			if (positions.get(i).equals(oldPosition)) {
@@ -60,6 +63,11 @@ public class PiecePositions {
 		return positions;
 	}
 
+	private ArrayList<Index> addPosition(ArrayList<Index> positions, Index newPosition) {
+		positions.add(newPosition);
+		return positions;
+	}
+	
 	private ArrayList<Index> removePosition(ArrayList<Index> positions, Index oldPosition) {
 		for (int i = 0; i < positions.size(); i++) {
 			if (positions.get(i).equals(oldPosition)) {
@@ -87,6 +95,14 @@ public class PiecePositions {
 		}
 	}
 
+	public void addPawnPosition(PlayerColor playerColor, Index newPosition){
+		if (playerColor.equals(PlayerColor.WHITE)) {
+			PawnBlackPositions = addPosition(PawnBlackPositions, newPosition);
+		} else {
+			PawnWhitePositions = addPosition(PawnWhitePositions, newPosition);
+		}
+	}
+	
 	public void removePawnPosition(PlayerColor playerColor, Index oldPosition) {
 		if (playerColor.equals(PlayerColor.WHITE)) {
 			PawnBlackPositions = removePosition(PawnBlackPositions, oldPosition);
@@ -111,6 +127,14 @@ public class PiecePositions {
 		}
 	}
 
+	public void addRookPosition(PlayerColor playerColor, Index newPosition) {
+		if (playerColor.equals(PlayerColor.WHITE)) {
+			RookBlackPositions = addPosition(RookBlackPositions, newPosition);
+		} else {
+			RookWhitePositions = addPosition(RookWhitePositions, newPosition);
+		}
+	}
+	
 	public void removeRookPosition(PlayerColor playerColor, Index oldPosition) {
 		if (playerColor.equals(PlayerColor.WHITE)) {
 			RookBlackPositions = removePosition(RookBlackPositions, oldPosition);
@@ -135,6 +159,14 @@ public class PiecePositions {
 		}
 	}
 
+	public void addKnightPosition(PlayerColor playerColor, Index newPosition) {
+		if (playerColor.equals(PlayerColor.WHITE)) {
+			KnightBlackPositions = addPosition(KnightBlackPositions, newPosition);
+		} else {
+			KnightWhitePositions = addPosition(KnightWhitePositions, newPosition);
+		}
+	}
+	
 	public void removeKnightPosition(PlayerColor playerColor, Index oldPosition) {
 		if (playerColor.equals(PlayerColor.WHITE)) {
 			KnightBlackPositions = removePosition(KnightBlackPositions, oldPosition);
@@ -159,6 +191,14 @@ public class PiecePositions {
 		}
 	}
 
+	public void addBishopPosition(PlayerColor playerColor, Index newPosition) {
+		if (playerColor.equals(PlayerColor.WHITE)) {
+			BishopBlackPositions = addPosition(BishopBlackPositions, newPosition);
+		} else {
+			BishopWhitePositions = addPosition(BishopWhitePositions, newPosition);
+		}
+	}
+	
 	public void removeBishopPosition(PlayerColor playerColor, Index oldPosition) {
 		if (playerColor.equals(PlayerColor.WHITE)) {
 			BishopBlackPositions = removePosition(BishopBlackPositions, oldPosition);
@@ -183,6 +223,14 @@ public class PiecePositions {
 		}
 	}
 
+	public void addQueenPosition(PlayerColor playerColor, Index newPosition) {
+		if (playerColor.equals(PlayerColor.WHITE)) {
+			QueenBlackPosition = newPosition;
+		} else {
+			QueenWhitePosition = newPosition;
+		}
+	}
+	
 	public void removeQueenPosition(PlayerColor playerColor) {
 		if (playerColor.equals(PlayerColor.WHITE)) {
 			QueenBlackPosition = new Index(-1, -1);
